@@ -13,9 +13,9 @@ function App() {
     <Container className="App">
       <Router>
         <Routes>
-          <Route path="/" element={<TestPage />} />
-          <Route path="/test" element={<TestPage />} />
-          <Route path="/score" element={<ScorePage />} />
+          <Route path="/type-test/" element={<TestPage />} />
+          <Route path="/type-test/test" element={<TestPage />} />
+          <Route path="/type-test/score" element={<ScorePage />} />
         </Routes>
       </Router>
     </Container>
