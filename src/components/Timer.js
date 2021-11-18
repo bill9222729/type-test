@@ -17,14 +17,14 @@ const Timer = (props) => {
                     if (minutes === 0) {
                         clearInterval(myInterval);
                     } else {
-                        setMinutes(minutes - 1);
                         setSeconds(59);
+                        setMinutes(minutes - 1);
                     }
                 }
                 timeReturnFuc(minutes, seconds);
             }, 1000)
             return () => {
-                // clearInterval(myInterval);
+                clearInterval(myInterval);
             };
         } else {
             return

@@ -1,3 +1,4 @@
+import React from 'react'
 import { useRef, useState } from "react";
 import styled from "styled-components";
 
@@ -12,14 +13,26 @@ const Question = (
     const [question, setQuestion] = useState(questionText);
     const [answer, setAnswer] = useState("");
     const inputDom = useRef();
+    let doing = false;
 
-    const handleAnserChange = (val) => {
-        let inputValue = val.target.value;
+    const Cstart = (val) => {
+        doing = false;
+    }
+
+    const Cend = (val) => {
+        doing = true;
+        handleAnserChange();
+    }
+
+    const handleAnserChange = () => {
+        let inputValue = inputDom.current.value;
         setAnswer(inputValue);
         onAnswerChange(inputValue, id);
         let allInput = inputDom.current.parentElement.parentElement.getElementsByTagName("input");
         let nextElement = allInput[id + 1];
-        if (question.length - 1 === answer.length) {
+        if (question.length <= inputValue.length) {
+            inputValue = inputValue.substring(0, question.length);
+            inputDom.current.value = inputValue;
             if (id === allInput.length - 1) {
                 onTestCompleted();
             } else {
@@ -47,7 +60,7 @@ const Question = (
 
 
     return (
-        <Container className="App">
+        <Container>
             <QuestionContainer>
                 {
                     question.split('').map((item, index) => {
@@ -63,16 +76,24 @@ const Question = (
                     })
                 }
             </QuestionContainer>
-            <input ref={inputDom} value={answer} onChange={handleAnserChange} onKeyDown={handleKeyPress} onFocus={onFocusFuction} />
+            <input ref={inputDom} onKeyDown={handleKeyPress} onFocus={onFocusFuction} onCompositionStart={Cstart} onCompositionEnd={Cend} />
+            {/* <input ref={inputDom} value={answer} onChange={handleAnserChange} onKeyDown={handleKeyPress} onFocus={onFocusFuction} onCompositionStart={Cstart} onCompositionEnd={Cend} /> */}
         </Container>
     );
 }
 
 const Container = styled.div`
+    padding:10px 20px;
+    input{
+        width:100%;
+    }
 `;
 
 const QuestionContainer = styled.div`
   display: flex;
+  width:100%;
 `;
 
-export default Question
+const MemorizeQuestion = React.memo(Question);
+
+export default MemorizeQuestion
