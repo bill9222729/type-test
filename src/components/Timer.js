@@ -24,7 +24,7 @@ const Timer = (props) => {
                 timeReturnFuc(minutes, seconds);
             }, 1000)
             return () => {
-                clearInterval(myInterval);
+                // clearInterval(myInterval);
             };
         } else {
             return
